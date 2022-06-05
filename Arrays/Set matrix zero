@@ -1,1 +1,50 @@
+#include <bits/stdc++.h>
+#define ll long long int
+#define ld long double
+#define kk '\n'
+using namespace std;
 
+class Solution
+{
+public:
+    void setZeroes(vector<vector<int>> &mat)
+    {
+        int n = mat.size();
+        int m = mat[0].size();
+
+        vector<int> x;
+        vector<int> y;
+        for (int i = 0; i < n; i++)
+        {
+            for (int j = 0; j < m; j++)
+            {
+                if (mat[i][j] == 0)
+                {
+                    x.push_back(i);
+                    y.push_back(j);
+                }
+            }
+        }
+
+        x.erase(unique(x.begin(), x.end()), x.end());
+        y.erase(unique(y.begin(), y.end()), y.end());
+
+        for (int i = 0; i < x.size(); i++)
+        {
+            for (int j = 0; j < m; j++)
+            {
+                mat[x[i]][j] = 0;
+            }
+        }
+
+        for (int j = 0; j < y.size(); j++)
+        {
+            for (int i = 0; i < n; i++)
+            {
+                mat[i][y[j]] = 0;
+            }
+        }
+
+       
+    }
+};

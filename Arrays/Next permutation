@@ -1,0 +1,51 @@
+#include <bits/stdc++.h>
+#define ll long long int
+#define ld long double
+#define forn for (int i = 0; i < n; i++)
+#define srt(v) sort(v.begin(), v.end());
+#define rev(v) reverse(v.begin(), v.end());
+#define kk '\n'
+using namespace std;
+
+vector<int> nextPermutation(vector<int> &a, int n)
+{
+
+    int in = -1;
+
+    for (int i = 0; i < n - 1; i++)
+    {
+        if (a[i] < a[i + 1])
+        {
+            in = i;
+        }
+    }
+
+    if (in == -1)
+    {
+        rev(a);
+        return a;
+    }
+
+    int in1 = -1;
+    int mini = a[in];
+    for (int i = in + 1; i < n; i++)
+    {
+        if (a[i] > mini)
+        {
+            mini = min(a[i], mini);
+            in1 = i;
+        }
+    }
+
+    swap(a[in], a[in1]);
+
+    reverse(a.begin() + in + 1, a.end());
+
+    vector<int> ans;
+    for (int i = 0; i < n; i++)
+    {
+        ans.push_back(a[i]);
+    }
+
+    return ans;
+}

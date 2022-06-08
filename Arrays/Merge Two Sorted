@@ -1,0 +1,25 @@
+#include <bits/stdc++.h>
+#define ll long long int
+#define ld long double
+#define forn for (ll i = 0; i < n; i++)
+#define srt(v) sort(v.begin(), v.end());
+#define rev(v) reverse(v.begin(), v.end());
+#define kk '\n'
+using namespace std;
+
+vector<int> ninjaAndSortedArrays(vector<int> &a1, vector<int> &a2, int n, int m)
+{
+    vector<int> res;
+    for (int i = 0; i < n; i++)
+    {
+        res.push_back(a1[i]);
+    }
+
+    for (int j = 0; j < m; j++)
+    {
+        res.push_back(a2[j]);
+    }
+
+    srt(res)
+    return res;
+}

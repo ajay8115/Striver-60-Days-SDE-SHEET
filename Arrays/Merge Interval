@@ -1,0 +1,35 @@
+#include <bits/stdc++.h>
+#define ll long long int
+#define ld long double
+#define forn for (ll i = 0; i < n; i++)
+#define srt(v) sort(v.begin(), v.end());
+#define rev(v) reverse(v.begin(), v.end());
+#define kk '\n'
+using namespace std;
+
+vector<vector<int>> mergeIntervals(vector<vector<int>> &inter)
+{
+    int n = inter.size();
+    vector<vector<int>> res;
+
+    if (n <= 1)
+    {
+        return res;
+    }
+
+    res.push_back({inter[0][0], inter[0][1]});
+
+    for (int i = 1; i < n; i++)
+    {
+        if (res.back()[1] >= inter[i][0])
+        {
+            res.back()[1] = max(res.back()[1], inter[i][1]);
+        }
+        else
+        {
+            res.push_back({inter[i][0], inter[i][1]});
+        }
+    }
+
+    return res;
+}

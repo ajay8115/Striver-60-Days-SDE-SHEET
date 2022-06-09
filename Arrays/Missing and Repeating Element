@@ -1,0 +1,26 @@
+pair<int, int> missingAndRepeating(vector<int> &a, int n)
+{
+    unordered_set<int> s;
+    int rep;
+    int sum = 0;
+    for (int i = 0; i < n; i++)
+    {
+        sum += a[i];
+        if (s.find(a[i]) != s.end())
+        {
+            rep = a[i];
+        }
+
+        s.insert(a[i]);
+    }
+
+    sum -= rep;
+
+    int mis = n * (n + 1) / 2 - sum;
+
+    pair<int, int> p;
+    p.first = mis;
+    p.second = rep;
+
+    return p;
+}

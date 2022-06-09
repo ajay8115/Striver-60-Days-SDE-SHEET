@@ -1,0 +1,36 @@
+#include <bits/stdc++.h>
+#define ll long long int
+#define ld long double
+#define forn for (int i = 0; i < n; i++)
+#define srt(v) sort(v.begin(), v.end());
+#define rev(v) reverse(v.begin(), v.end());
+#define kk '\n'
+using namespace std;
+
+bool searchMatrix(vector<vector<int>> &mat, int t)
+{
+    int n = mat.size();
+    int m = mat[0].size();
+
+    int l = 0, r = n * m - 1;
+
+    while (l < r)
+    {
+        int mid = l + (r - l) / 2;
+
+        if (mat[mid / m][mid % m] == t)
+        {
+            return true;
+        }
+        else if (mat[mid / m][mid % m] > t)
+        {
+            r = mid;
+        }
+        else
+        {
+            l = mid + 1;
+        }
+    }
+
+    return (mat[r / m][r % m] == t);
+}

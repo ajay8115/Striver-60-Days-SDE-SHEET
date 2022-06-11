@@ -1,0 +1,82 @@
+#include <bits/stdc++.h>
+#define ll long long int
+#define ld long double
+#define forn for (int i = 0; i < n; i++)
+#define srt(v) sort(v.begin(), v.end());
+#define rev(v) reverse(v.begin(), v.end());
+#define kk '\n'
+using namespace std;
+
+ 
+vector<vector<int>> fourSum(vector<int> &a, int tar)
+{
+    vector<vector<int>> res;
+    int n = a.size();
+    if (n == 0)
+    {
+        return res;
+    }
+
+    sort(a.begin(), a.end());
+
+    for (int i = 0; i < n; i++)
+    {
+        int tar3 = tar - a[i];
+        for (int j = i + 1; j < n; j++)
+        {
+            int tar2 = tar3 - a[j];
+
+            int front = j + 1, back = n - 1;
+
+            while (front < back)
+            {
+                int two_sum = a[front] + a[back];
+
+                if (two_sum < tar2)
+                {
+                    front++;
+                }
+
+                else if (two_sum > tar2)
+                {
+                    back--;
+                }
+                else
+                {
+                    vector<int> qp(4, 0);
+                    qp[0] = a[i];
+                    qp[1] = a[j];
+                    qp[2] = a[front];
+                    qp[3] = a[back];
+                    res.push_back(qp);
+
+                    // Skip  the duplicates of number qp[2]
+                    while (front < back and a[front] == qp[2])
+                    {
+                        front++;
+                    }
+
+                    // Skip  the duplicates of number qp[3]
+                    while (front < back and a[back] == qp[3])
+                    {
+                        back--;
+                    }
+                }
+            }
+
+            // Skip  the duplicates of number qp[1]
+            while (j + 1 < n and a[j + 1] == a[j])
+            {
+                j++;
+            }
+        }
+
+        // Skip  the duplicates of number qp[0]
+        while (i + 1 < n and a[i + 1] == a[i])
+        {
+            i++;
+        }
+    }
+
+    return res;
+}

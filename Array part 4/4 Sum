@@ -5,9 +5,41 @@
 #define srt(v) sort(v.begin(), v.end());
 #define rev(v) reverse(v.begin(), v.end());
 #define kk '\n'
-using namespace std;
+using namespace std; 
 
- 
+// Code studio Solution 
+string fourSum(vector<int> a, int tar, int n)
+{ 
+    unordered_map<int, pair<int, int>> m;
+    for (int i = 0; i < n - 1; i++)
+    {
+        for (int j = i + 1; j < n; j++)
+        {
+            int x = a[i] + a[j];
+            m[x] = {i, j};
+        }
+    }
+
+    for (int i = 0; i < n - 1; i++)
+    {
+        for (int j = i + 1; j < n; j++)
+        {
+            int k = a[i] + a[j];
+            if (m.find(tar - k) != m.end())
+            {
+                int x = m[tar - k].first, y = m[tar - k].second;
+                if (x != i and x != j and y != i and y != j)
+                {
+                    return "Yes";
+                }
+            }
+        }
+    }
+
+    return "No";
+}
+
+ // Leetcode solution 
 vector<vector<int>> fourSum(vector<int> &a, int tar)
 {
     vector<vector<int>> res;

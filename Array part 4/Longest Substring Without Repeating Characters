@@ -1,0 +1,45 @@
+#include <bits/stdc++.h>
+#define ll long long int
+#define ld long double
+#define forn for (int i = 0; i < n; i++)
+#define srt(v) sort(v.begin(), v.end());
+#define rev(v) reverse(v.begin(), v.end());
+#define kk '\n'
+using namespace std;
+
+int uniqueSubstrings(string s)
+{
+    int n = s.size();
+
+    unordered_map<char, int> m;
+
+    int maxi = 0;
+    int i = 0, j = 0;
+    while (j < n)
+    {
+        m[s[j]]++;
+
+        if (m.size() == (j - i + 1))
+        {
+            maxi = max(maxi, (j - i + 1));
+            j++;
+        }
+
+        else if (m.size() < (j - i + 1))
+        {
+            while (m.size() < (j - i + 1))
+            {
+                m[s[i]]--;
+                if (m[s[i]] == 0)
+                {
+                    m.erase(s[i]);
+                }
+
+                i++;
+            }
+            j++;
+        }
+    }
+
+    return maxi;
+}

@@ -1,0 +1,37 @@
+int LongestSubsetWithZeroSum(vector<int> a)
+{
+    int n = a.size();
+    vector<int> v;
+
+    int sum = 0;
+    for (int i = 0; i < n; i++)
+    {
+        sum += a[i];
+        v.push_back(sum);
+    }
+
+    unordered_map<int, int> m;
+
+    int maxi = 0;
+    for (int i = 0; i < n; i++)
+    {
+        int cur_len = 0;
+        if (v[i] == 0)
+        {
+            cur_len = i + 1;
+        }
+
+        else if (m.find(v[i]) != m.end())
+        {
+            cur_len = i - m[v[i]];
+        }
+        else
+        {
+            m[v[i]] = i;
+        }
+
+        maxi = max(maxi, cur_len);
+    }
+
+    return maxi;
+}

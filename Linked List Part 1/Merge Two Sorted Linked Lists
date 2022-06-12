@@ -1,0 +1,67 @@
+#include <bits/stdc++.h>
+#define ll long long int
+#define ld long double
+#define forn for (int i = 0; i < n; i++)
+#define srt(v) sort(v.begin(), v.end());
+#define rev(v) reverse(v.begin(), v.end());
+#define kk '\n'
+using namespace std;
+
+template <typename T>
+class Node
+{
+public:
+    T data;
+    Node *next;
+
+    Node(T data)
+    {
+        next = NULL;
+        this->data = data;
+    }
+
+    ~Node()
+    {
+        if (next != NULL)
+        {
+            delete next;
+        }
+    }
+};
+
+Node<int> *sortTwoLists(Node<int> *first, Node<int> *second)
+{
+    Node<int> *dummynode = new Node<int>(-1);
+    Node<int> *temp = dummynode;
+    while (first != NULL and second != NULL)
+    {
+        if (first->data <= second->data)
+        {
+            temp->next = first;
+            temp = temp->next;
+            first = first->next;
+        }
+        else
+        {
+            temp->next = second;
+            temp = temp->next;
+            second = second->next;
+        }
+    }
+
+    while (first != NULL)
+    {
+        temp->next = first;
+        temp = temp->next;
+        first = first->next;
+    }
+
+    while (second != NULL)
+    {
+        temp->next = second;
+        temp = temp->next;
+        second = second->next;
+    }
+
+    return dummynode->next;
+}

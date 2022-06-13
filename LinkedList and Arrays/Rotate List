@@ -1,1 +1,53 @@
-1
+#include <bits/stdc++.h>
+#define ll long long int
+#define ld long double
+#define forn for (int i = 0; i < n; i++)
+#define srt(v) sort(v.begin(), v.end());
+#define rev(v) reverse(v.begin(), v.end());
+#define kk '\n'
+using namespace std;
+
+class Node
+{
+public:
+    int data;
+    Node *next;
+    Node(int data)
+    {
+        this->data = data;
+        this->next = NULL;
+    }
+};
+Node *rotate(Node *head, int k)
+{
+    if (head == NULL or head->next == NULL or k == 0)
+    {
+        return head;
+    }
+
+    int size = 1;
+    Node *cur = head;
+
+    while (cur->next)
+    {
+        size++;
+        cur = cur->next;
+    }
+
+    cur->next = head;
+
+    if (k > size)
+    {
+        k = k % size;
+    }
+
+    while (size > k)
+    {
+        cur = cur->next;
+        size--;
+    }
+
+    Node *newhead = cur->next;
+    cur->next = NULL;
+    return newhead;
+}

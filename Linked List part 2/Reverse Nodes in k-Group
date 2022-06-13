@@ -1,0 +1,105 @@
+#include <bits/stdc++.h>
+#define ll long long int
+#define ld long double
+#define forn for (int i = 0; i < n; i++)
+#define srt(v) sort(v.begin(), v.end());
+#define rev(v) reverse(v.begin(), v.end());
+#define kk '\n'
+using namespace std;
+
+class Node
+{
+public:
+    int data;
+    Node *next;
+    Node(int data)
+    {
+        this->data = data;
+        this->next = NULL;
+    }
+};
+
+Node *getListAfterReverseOperation(Node *head, int n, int b[])
+{
+    Node *dummy = new Node(-1);
+    dummy->next = head;
+
+    Node *pre = dummy;
+    Node *cur = dummy;
+    Node *nxt = dummy;
+
+    int cnt = 0;
+    while (cur->next != NULL)
+    {
+        cur = cur->next;
+        cnt++;
+    }
+
+    int j = 0;
+    while (cnt > 0 && j < n)
+    {
+        cur = pre->next;
+        nxt = cur->next;
+        int x = (b[j] <= cnt) ? b[j] : cnt;
+        if (x == 0)
+        {
+            j++;
+            continue;
+        }
+
+        for (int i = 1; i < x; i++)
+        {
+            cur->next = nxt->next;
+            nxt->next = pre->next;
+            pre->next = nxt;
+            nxt = cur->next;
+        }
+
+        pre = cur;
+        cnt -= b[j];
+        j++;
+    }
+    return dummy->next;
+}
+
+// Leetcode Solution 
+// ListNode *reverseKGroup(ListNode *head, int k)
+// {
+//     vector<vector<int>> v;
+//     ListNode *cur = head;
+//     vector<int> t;
+//     while (cur)
+//     {
+//         t.push_back(cur->val);
+//         cur = cur->next;
+//         if (t.size() == k)
+//         {
+//             reverse(t.begin(), t.end());
+//             v.push_back(t);
+//             t.clear();
+//         }
+//     }
+
+//     // reverse(t.begin(), t.end());
+//     v.push_back(t);
+
+//     vector<int> u;
+//     for (int i = 0; i < v.size(); i++)
+//     {
+//         for (int j = 0; j < v[i].size(); j++)
+//         {
+//             u.push_back(v[i][j]);
+//         }
+//     }
+
+//     int i = 0;
+//     cur = head;
+//     while (cur)
+//     {
+//         cur->val = u[i];
+//         i++;
+//         cur = cur->next;
+//     }
+
+//     return head;
+// }

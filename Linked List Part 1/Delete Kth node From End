@@ -1,0 +1,50 @@
+#include <bits/stdc++.h>
+#define ll long long int
+#define ld long double
+#define forn for (int i = 0; i < n; i++)
+#define srt(v) sort(v.begin(), v.end());
+#define rev(v) reverse(v.begin(), v.end());
+#define kk '\n'
+using namespace std;
+
+template <typename T>
+class LinkedListNode
+{
+public:
+    T data;
+    LinkedListNode<T> *next;
+    LinkedListNode(T data)
+    {
+        this->data = data;
+        this->next = NULL;
+    }
+};
+
+LinkedListNode<int> *removeKthNode(LinkedListNode<int> *head, int k)
+{
+    if (head == NULL || k == 0)
+    {
+        return head;
+    }
+
+    LinkedListNode<int> *dummy = new LinkedListNode<int>(-1);
+    LinkedListNode<int> *slow = dummy;
+    LinkedListNode<int> *fast = dummy;
+
+    dummy->next = head;
+
+    for (int i = 1; i <= k; i++)
+    {
+        fast = fast->next;
+    }
+
+    while (fast and fast->next)
+    {
+        slow = slow->next;
+        fast = fast->next;
+    }
+
+    slow->next = slow->next->next;
+
+    return dummy->next;
+}

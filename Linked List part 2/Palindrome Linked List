@@ -1,0 +1,109 @@
+#include <bits/stdc++.h>
+#define ll long long int
+#define ld long double
+#define forn for (int i = 0; i < n; i++)
+#define srt(v) sort(v.begin(), v.end());
+#define rev(v) reverse(v.begin(), v.end());
+#define kk '\n'
+using namespace std;
+
+template <typename T>
+class LinkedListNode
+{
+public:
+    T data;
+    LinkedListNode<T> *next;
+    LinkedListNode(T data)
+    {
+        this->data = data;
+        this->next = NULL;
+    }
+};
+
+// APPROACH 1
+
+LinkedListNode<int> *reverse(LinkedListNode<int> *head)
+{
+    LinkedListNode<int> *pre = NULL;
+    LinkedListNode<int> *cur = head;
+    LinkedListNode<int> *nxt = head->next;
+
+    while (cur)
+    {
+        nxt = cur->next;
+        cur->next = pre;
+        pre = cur;
+        cur = nxt;
+    }
+
+    return pre;
+}
+
+bool isPalindrome(LinkedListNode<int> *head)
+{
+    if (head == NULL or head->next == NULL)
+    {
+        return true;
+    }
+
+    LinkedListNode<int> *slow = head;
+    LinkedListNode<int> *fast = head;
+
+    while (fast and fast->next)
+    {
+        slow = slow->next;
+        fast = fast->next->next;
+    }
+
+    if (fast != NULL)
+    {
+        slow = slow->next;
+    }
+
+    slow = reverse(slow);
+
+    LinkedListNode<int> *cur = head;
+    while (slow)
+    {
+        if (cur->data != slow->data)
+        {
+            return false;
+        }
+
+        slow = slow->next;
+        cur = cur->next;
+    }
+
+    return true;
+}
+
+// APPROACH 2
+
+bool isPalindrome(LinkedListNode<int> *head)
+{
+    vector<int> v;
+    LinkedListNode<int> *cur = head;
+    while (cur)
+    {
+        v.push_back(cur->data);
+        cur = cur->next;
+    }
+
+    int n = v.size();
+    int i = 0, j = n - 1;
+
+    while (i < j)
+    {
+        if (v[i] != v[j])
+        {
+            return false;
+        }
+        else
+        {
+            i++;
+            j--;
+        }
+    }
+
+    return true;
+}

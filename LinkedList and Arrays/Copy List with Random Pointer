@@ -1,0 +1,77 @@
+#include <bits/stdc++.h>
+#define ll long long int
+#define ld long double
+#define forn for (int i = 0; i < n; i++)
+#define srt(v) sort(v.begin(), v.end());
+#define rev(v) reverse(v.begin(), v.end());
+#define kk '\n'
+using namespace std;
+
+template <typename T>
+class LinkedListNode
+{
+public:
+    T data;
+    LinkedListNode<T> *next;
+    LinkedListNode<T> *random;
+    LinkedListNode(T data)
+    {
+        this->data = data;
+        this->next = NULL;
+    }
+};
+
+LinkedListNode<int> *cloneRandomList(LinkedListNode<int> *head)
+{
+    if (head == NULL)
+    {
+        return head;
+    }
+
+    LinkedListNode<int> *cur = head;
+    LinkedListNode<int> *temp;
+
+    while (cur)
+    {
+        temp = cur->next;
+        cur->next = new LinkedListNode<int>(cur->data);
+        cur->next->next = temp;
+        cur = temp;
+    }
+
+    cur = head;
+    while (cur)
+    {
+        if (cur->random != NULL)
+        {
+            cur->next->random = cur->random->next;
+        }
+        else
+        {
+            cur->next->random = NULL;
+        }
+        cur = cur->next->next;
+    }
+
+    LinkedListNode<int> *org = head;
+    LinkedListNode<int> *copy = head->next;
+    LinkedListNode<int> *copyhead = copy;
+
+    while (org and copy)
+    {
+        org->next = org->next->next;
+        if (copy->next != NULL)
+        {
+            copy->next = copy->next->next;
+        }
+        else
+        {
+            copy->next = NULL;
+        }
+
+        org = org->next;
+        copy = copy->next;
+    }
+
+    return copyhead;
+}

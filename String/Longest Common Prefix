@@ -1,0 +1,27 @@
+#include <bits/stdc++.h>
+#define ll long long int
+#define ld long double
+#define forn for (int i = 0; i < n; i++)
+#define srt(v) sort(v.begin(), v.end());
+#define rev(v) reverse(v.begin(), v.end());
+#define kk '\n'
+using namespace std;
+
+string longestCommonPrefix(vector<string> &ar, int n)
+{
+    sort(ar.begin(), ar.end());
+    string a = ar[0], b = ar[n - 1];
+
+    string ans = "";
+    for (int i = 0; i < a.size(); i++)
+    {
+        if (a[i] != b[i])
+        {
+            break;
+        }
+
+        ans += a[i];
+    }
+
+    return ans;
+}

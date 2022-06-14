@@ -1,0 +1,45 @@
+#include <bits/stdc++.h>
+#define ll long long int
+#define ld long double
+#define forn for (int i = 0; i < n; i++)
+#define srt(v) sort(v.begin(), v.end());
+#define rev(v) reverse(v.begin(), v.end());
+#define kk '\n'
+using namespace std;
+ 
+string reverseString(string s)
+{
+    if (s.size() == 0)
+    {
+        return s;
+    }
+
+    stack<string> st;
+    for (int i = 0; i < s.size(); i++)
+    {
+        string words = "";
+        if (s[i] == ' ')
+        {
+            continue;
+        }
+
+        while (i < s.size() and s[i] != ' ')
+        {
+            words += s[i];
+            i++;
+        }
+        st.push(words);
+    }
+
+    string ans = "";
+    while (!st.empty())
+    {
+        ans += st.top();
+        ans += ' ';
+        st.pop();
+    }
+
+    ans.pop_back();
+
+    return ans;
+}

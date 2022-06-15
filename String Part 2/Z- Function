@@ -1,1 +1,53 @@
-1
+// Approach 1  Only 4 test cases passed
+
+int zAlgorithm(string str, string pat, int n, int m)
+{
+    int i = 0, j = 0;
+
+    vector<int> v;
+    while (i < n)
+    {
+        if (str[i] == pat[j])
+        {
+            i++;
+            j++;
+        }
+
+        else if (j == m)
+        {
+            v.push_back(i - m);
+            j = 0;
+            //   i++;
+        }
+
+        else if (str[i] != pat[j])
+        {
+            j = 0;
+            i++;
+        }
+    }
+
+    if (j == m)
+    {
+        v.push_back(i - m);
+    }
+
+    return v.size();
+}
+
+// Approach 2
+
+//  Time complexity : O(n^2)
+int zAlgorithm(string s, string p, int n, int m)
+{
+    int count = 0;
+    for (int i = 0; i < n - m + 1; i++)
+    {
+        string ans = s.substr(i, m);
+        if (ans == p)
+        {
+            count++;
+        }
+    }
+    return count;
+}

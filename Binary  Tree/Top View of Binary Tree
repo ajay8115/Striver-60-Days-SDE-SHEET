@@ -1,0 +1,62 @@
+template <typename T>
+class TreeNode
+{
+public:
+    T val;
+    TreeNode<T> *left;
+    TreeNode<T> *right;
+
+    TreeNode(T val)
+    {
+        this->val = val;
+        left = NULL;
+        right = NULL;
+    }
+};
+
+vector<int> getTopView(TreeNode<int> *root)
+{
+    vector<int> ans;
+
+    if (root == NULL)
+    {
+        return ans;
+    }
+
+    queue<pair<TreeNode<int> *, int>> q;
+
+    map<int, int> m;
+
+    q.push({root, 0});
+
+    while (!q.empty())
+    {
+        TreeNode<int> *cur = q.front().first;
+        int hi = q.front().second;
+
+        q.pop();
+
+        if (m[hi] == 0)
+        {
+            m[hi] = cur->val;
+        }
+
+        if (cur->left)
+        {
+            q.push({cur->left, hi - 1});
+        }
+
+        if (cur->right)
+        {
+            q.push({cur->right, hi + 1});
+        }
+    }
+
+    for (auto p : m)
+    {
+        ans.push_back(p.second);
+    }
+
+    return ans;
+}
+ 

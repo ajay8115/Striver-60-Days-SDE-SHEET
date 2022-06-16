@@ -1,0 +1,22 @@
+int maximumProduct(vector<int> &a, int n)
+{
+    int mx = a[0];
+    int mi = a[0];
+
+    int maxi = a[0];
+
+    for (int i = 1; i < n; i++)
+    {
+        if (a[i] < 0)
+        {
+            swap(mx, mi);
+        }
+
+        mx = max(a[i], (mx * a[i]));
+        mi = min(a[i], (mi * a[i]));
+
+        maxi = max(maxi, mx);
+    }
+
+    return maxi;
+}

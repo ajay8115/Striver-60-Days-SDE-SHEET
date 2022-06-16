@@ -1,0 +1,53 @@
+
+void inorder(vector<int> &in, BinaryTreeNode<int> *root)
+{
+    if (root != NULL)
+    {
+        inorder(in, root->left);
+        in.push_back(root->data);
+        inorder(in, root->right);
+    }
+}
+
+void preorder(vector<int> &pre, BinaryTreeNode<int> *root)
+{
+    if (root != NULL)
+    {
+        pre.push_back(root->data);
+        preorder(pre, root->left);
+        preorder(pre, root->right);
+    }
+}
+
+void postorder(vector<int> &po, BinaryTreeNode<int> *root)
+{
+    if (root != NULL)
+    {
+        postorder(po, root->left);
+        postorder(po, root->right);
+        po.push_back(root->data);
+    }
+}
+
+vector<vector<int>> getTreeTraversal(BinaryTreeNode<int> *root)
+{
+    vector<vector<int>> ans;
+    if (root == NULL)
+    {
+        return ans;
+    }
+
+    vector<int> in;
+    vector<int> pre;
+    vector<int> po;
+
+    inorder(in, root);
+    postorder(pre, root);
+    preorder(po, root);
+
+    ans.push_back(in);
+    ans.push_back(po);
+    ans.push_back(pre);
+
+    return ans;
+}

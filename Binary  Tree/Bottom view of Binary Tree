@@ -1,0 +1,61 @@
+#include <bits/stdc++.h>
+#define ll long long int
+#define ld long double
+#define forn for (int i = 0; i < n; i++)
+#define srt(v) sort(v.begin(), v.end());
+#define rev(v) reverse(v.begin(), v.end());
+#define kk '\n'
+using namespace std;
+
+template <typename T>
+class BinaryTreeNode
+{
+public:
+    T data;
+    BinaryTreeNode<T> *left;
+    BinaryTreeNode<T> *right;
+
+    BinaryTreeNode(T data)
+    {
+        this->data = data;
+        left = NULL;
+        right = NULL;
+    }
+};
+
+vector<int> bottomView(BinaryTreeNode<int> *root)
+{
+    vector<int> ans;
+    if (root == NULL)
+    {
+        return ans;
+    }
+
+    map<int, int> m;
+    queue<pair<BinaryTreeNode<int> *, int>> q;
+    q.push({root, 0});
+
+    while (!q.empty())
+    {
+        BinaryTreeNode<int> *cur = q.front().first;
+        int hi = q.front().second;
+        q.pop();
+        m[hi] = cur->data;
+        if (cur->left)
+        {
+            q.push({cur->left, hi - 1});
+        }
+
+        if (cur->right)
+        {
+            q.push({cur->right, hi + 1});
+        }
+    }
+
+    for (auto p : m)
+    {
+        ans.push_back(p.second);
+    }
+
+    return ans;
+}

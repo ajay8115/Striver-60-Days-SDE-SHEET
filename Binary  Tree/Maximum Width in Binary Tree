@@ -1,73 +1,83 @@
-#include <bits/stdc++.h>
-#define ll long long int
-#define ld long double
-#define forn for (int i = 0; i < n; i++)
-#define srt(v) sort(v.begin(), v.end());
-#define rev(v) reverse(v.begin(), v.end());
-#define kk '\n'
-using namespace std;
-template <typename T = int>
-
-class TreeNode
+ // Leetcode Solution 
+ class Solution
 {
 public:
-    T data;
-    TreeNode<T> *left;
-    TreeNode<T> *right;
-
-    TreeNode(T data)
+    int widthOfBinaryTree(TreeNode *root)
     {
-        this->data = data;
-        left = NULL;
-        right = NULL;
-    }
+        if (root == NULL)
+        {
+            return 0;
+        }
 
-    ~TreeNode()
-    {
-        if (left != NULL)
+        int ans = 1;
+
+        queue<pair<TreeNode *, int>> q;
+
+        q.push({root, 0});
+
+        while (!q.empty())
         {
-            delete left;
+            int cnt = q.size();
+            int start = q.front().second;
+            int end = q.back().second;
+
+            ans = max(ans, end - start + 1);
+
+            for (int i = 0; i < cnt; ++i)
+            {
+                TreeNode *cur = q.front().first;
+
+                int idx = q.front().second - start;
+
+                q.pop();
+                if (cur->left)
+                {
+                    q.push({cur->left, (long long)2 * idx + 1});
+                }
+
+                if (cur->right)
+                {
+                    q.push({cur->right, (long long)2 * idx + 2});
+                }
+            }
         }
-        if (right != NULL)
-        {
-            delete right;
-        }
+
+        return ans;
     }
 };
 
-bool getPath(TreeNode<int> *root, vector<int> &ans, int x)
+// Coding Ninjas solution It's passed all the cases it should not be happen
+
+int getMaxWidth(TreeNode<int> *root)
 {
+
     if (root == NULL)
+        return 0;
+
+    queue<TreeNode<int> *> q;
+
+    q.push(root);
+    int ans = 0;
+    while (!q.empty())
     {
-        return false;
+        int n = q.size();
+        ans = max(ans, n);
+
+        for (int i = 0; i < n; i++)
+        {
+            TreeNode<int> *cur = q.front();
+            q.pop();
+            if (cur->left)
+            {
+                q.push(cur->left);
+            }
+            if (cur->right)
+            {
+                q.push(cur->right);
+            }
+        }
     }
-
-    ans.push_back(root->data);
-
-    if (root->data == x)
-    {
-        return true;
-    }
-
-    if (getPath(root->left, ans, x) or getPath(root->right, ans, x))
-    {
-        return true;
-    }
-
-    ans.pop_back();
-
-    return false;
-}
-vector<int> pathInATree(TreeNode<int> *root, int x)
-{
-    vector<int> ans;
-    if (root->data == x)
-    {
-        ans.push_back(x);
-        return ans;
-    }
-
-    getPath(root, ans, x);
 
     return ans;
 }
+

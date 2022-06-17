@@ -1,0 +1,93 @@
+#include <bits/stdc++.h>
+#define ll long long int
+#define ld long double
+#define forn for (int i = 0; i < n; i++)
+#define srt(v) sort(v.begin(), v.end());
+#define rev(v) reverse(v.begin(), v.end());
+#define kk '\n'
+using namespace std;
+ 
+template <typename T = int>
+class TreeNode
+{
+public:
+    T data;
+    TreeNode<T> *left;
+    TreeNode<T> *right;
+
+    TreeNode(T val)
+    {
+        this->data = val;
+        left = NULL;
+        right = NULL;
+    }
+
+    ~TreeNode()
+    {
+        if (left != NULL)
+        {
+            delete left;
+        }
+        if (right != NULL)
+        {
+            delete right;
+        }
+    }
+};
+
+vector<int> verticalOrderTraversal(TreeNode<int> *root)
+{
+    vector<int> ans;
+
+    map<int, map<int, vector<int>>> nodes;
+
+    queue<pair<TreeNode<int> *, pair<int, int>>> q;
+
+    if (root == nullptr)
+        return ans;
+
+    q.push({root, {0, 0}});
+
+    while (!q.empty())
+    {
+        auto p = q.front();
+
+        q.pop();
+
+        TreeNode<int> *temp = p.first;
+        int x = p.second.first;
+        int y = p.second.second;
+
+        nodes[x][y].push_back(temp->data);
+
+        if (temp->left)
+        {
+            q.push({temp->left, {x - 1, y + 1}});
+        }
+
+        if (temp->right)
+        {
+            q.push({temp->right, {x + 1, y + 1}});
+        }
+    }
+
+    vector<vector<int>> res;
+    for (auto it : nodes)
+    {
+        vector<int> col;
+        for (auto p : it.second)
+        {
+            col.insert(col.end(), p.second.begin(), p.second.end());
+        }
+        res.push_back(col);
+    }
+
+    for (auto it : res)
+    {
+        for (auto p : it)
+        {
+            ans.push_back(p);
+        }
+    }
+    return ans;
+}

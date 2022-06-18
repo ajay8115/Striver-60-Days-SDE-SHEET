@@ -1,0 +1,45 @@
+template <typename T>
+class BinaryTreeNode
+{
+public:
+    T data;
+    BinaryTreeNode<T> *left;
+    BinaryTreeNode<T> *right;
+
+    BinaryTreeNode(T data)
+    {
+        this->data = data;
+        left = NULL;
+        right = NULL;
+    }
+};
+
+int height(BinaryTreeNode<int> *root)
+{
+    if (!root)
+    {
+        return 0;
+    }
+
+    return 1 + max(height(root->left), height(root->right));
+}
+
+bool isBalancedBT(BinaryTreeNode<int> *root)
+{
+    if (!root)
+    {
+        return true;
+    }
+
+    int lh = height(root->left);
+    int rh = height(root->right);
+
+    int d = abs(lh - rh);
+
+    if (d <= 1 and isBalancedBT(root->left) and isBalancedBT(root->right))
+    {
+        return true;
+    }
+
+    return false;
+}

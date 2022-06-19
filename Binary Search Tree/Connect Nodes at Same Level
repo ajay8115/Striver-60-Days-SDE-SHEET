@@ -1,0 +1,82 @@
+// CODING NINJAS ACCEPTED SOLUTION 
+
+void connectNodes(BinaryTreeNode<int> *root)
+{
+    if (root == NULL)
+        return;
+
+    queue<BinaryTreeNode<int> *> q;
+
+    q.push(root);
+
+    while (!q.empty())
+    {
+        int n = q.size();
+
+        for (int i = 0; i < n; i++)
+        {
+            BinaryTreeNode<int> *cur = q.front();
+
+            q.pop();
+
+            if (i == n - 1)
+            {
+                cur->next = NULL;
+            }
+            else
+            {
+                cur->next = q.front();
+            }
+
+            if (cur->left != NULL)
+            {
+                q.push(cur->left);
+            }
+            if (cur->right != NULL)
+            {
+                q.push(cur->right);
+            }
+        }
+    }
+}
+
+
+
+// Leetcode Accepted SOLUTION 
+class Solution
+{
+public:
+    Node *connect(Node *root)
+    {
+        if (!root)
+        {
+            return NULL;
+        }
+
+        Node *cur = root;
+
+        while (cur->left)
+        {
+            Node *nextlevelnode = cur->left;
+
+            while (cur)
+            {
+                cur->left->next = cur->right;
+                if (cur->next == NULL)
+                {
+                    cur->right->next = NULL;
+                }
+                else if (cur->next != NULL)
+                {
+                    cur->right->next = cur->next->left;
+                }
+
+                cur = cur->next;
+            }
+
+            cur = nextlevelnode;
+        }
+
+        return root;
+    }
+};

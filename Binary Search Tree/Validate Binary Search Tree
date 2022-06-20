@@ -1,0 +1,46 @@
+// APPROACH 1
+
+void inorder(BinaryTreeNode<int> *root, vector<int> &in)
+{
+    if (root)
+    {
+        inorder(root->left, in);
+        in.push_back(root->data);
+        inorder(root->right, in);
+    }
+}
+bool validateBST(BinaryTreeNode<int> *root)
+{
+    vector<int> in;
+    vector<int> in1;
+    inorder(root, in);
+
+    in1 = in;
+
+    sort(in.begin(), in.end());
+
+    return in == in1;
+}
+
+
+// APPROACH 2
+
+bool checkBST(BinaryTreeNode<int> *root, int mn, int mx)
+{
+    if (root == NULL)
+        return true;
+
+    if (root->data >= mn && root->data <= mx)
+    {
+        return checkBST(root->left, mn, root->data - 1) && checkBST(root->right, root->data + 1, mx);
+    }
+    else
+    {
+        return false;
+    }
+}
+
+bool validateBST(BinaryTreeNode<int> *root)
+{
+    return checkBST(root, INT_MIN, INT_MAX);
+}

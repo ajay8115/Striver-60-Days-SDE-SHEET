@@ -1,0 +1,88 @@
+template <typename T>
+class TreeNode
+{
+public:
+    T data;
+    TreeNode<T> *left;
+    TreeNode<T> *right;
+
+    TreeNode(T data)
+    {
+        this->data = data;
+        left = NULL;
+        right = NULL;
+    }
+    ~TreeNode()
+    {
+        if (left)
+        {
+            delete left;
+        }
+        if (right)
+        {
+            delete right;
+        }
+    }
+};
+
+TreeNode<int> *getnewnode(int data)
+{
+    TreeNode<int> *newnode = new TreeNode<int>(data);
+    newnode->left = NULL;
+    newnode->right = NULL;
+
+    return newnode;
+}
+
+int fun(vector<int> &pre, int n, int pos, TreeNode<int> *cur, int left, int right)
+{
+    if (pos == n or pre[pos] < left or pre[pos] > right)
+    {
+        return pos;
+    }
+
+    if (pre[pos] < cur->data)
+    {
+        cur->left = getnewnode(pre[pos]);
+        pos++;
+        pos = fun(pre, n, pos, cur->left, left, cur->data - 1);
+    }
+
+    if (pos == n or pre[pos] < left or pre[pos] > right)
+    {
+        return pos;
+    }
+
+    if (pre[pos] > cur->data)
+    {
+        cur->right = getnewnode(pre[pos]);
+        pos++;
+        pos = fun(pre, n, pos, cur->right, cur->data + 1, right);
+    }
+
+    return pos;
+}
+
+TreeNode<int> *preOrderTree(vector<int> &pre)
+{
+
+    int n = pre.size();
+
+    if (n == 0)
+    {
+        return NULL;
+    }
+
+    TreeNode<int> *root = getnewnode(pre[0]);
+
+    if (n == 1)
+    {
+        return root;
+    }
+
+    int pos = 1;
+
+    fun(pre, n, pos, root, INT_MIN, INT_MAX);
+
+    return root;
+}

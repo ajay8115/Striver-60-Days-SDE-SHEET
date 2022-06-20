@@ -1,0 +1,27 @@
+class Solution
+{
+public:
+    TreeNode *fun(vector<int> &a, int start, int end)
+    {
+        if (start > end) // Base Case
+        {
+            return NULL;
+        }
+
+        int mid = start + (end - start) / 2;
+
+        TreeNode *node = new TreeNode(a[mid]);
+
+        node->left = fun(a, start, mid - 1);
+        node->right = fun(a, mid + 1, end);
+
+        return node;
+    }
+    TreeNode *sortedArrayToBST(vector<int> &a)
+    {
+        int n = a.size();
+        TreeNode *head = fun(a, 0, n - 1);
+
+        return head;
+    }
+};

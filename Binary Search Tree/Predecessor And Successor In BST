@@ -1,0 +1,88 @@
+
+template <typename T>
+class BinaryTreeNode
+{
+public:
+    T data;
+    BinaryTreeNode<T> *left;
+    BinaryTreeNode<T> *right;
+
+    BinaryTreeNode(T data)
+    {
+        this->data = data;
+        left = NULL;
+        right = NULL;
+    }
+
+    ~BinaryTreeNode()
+    {
+        if (left)
+        {
+            delete left;
+        }
+        if (right)
+        {
+            delete right;
+        }
+    }
+};
+
+pair<int, int> predecessorSuccessor(BinaryTreeNode<int> *root, int key)
+{
+    pair<int, int> p;
+
+    BinaryTreeNode<int> *cur = root;
+    BinaryTreeNode<int> *pre = NULL;
+
+    while (cur)
+    {
+        if (cur->data < key)
+        {
+            pre = cur;
+            cur = cur->right;
+        }
+
+        else if (cur->data >= key)
+        {
+            cur = cur->left;
+        }
+    }
+
+    
+    cur = root;
+    BinaryTreeNode<int> *suc = NULL;
+
+    while (cur)
+    {
+        if (cur->data > key)
+        {
+            suc = cur;
+            cur = cur->left;
+        }
+
+        else if (cur->data <= key)
+        {
+            cur = cur->right;
+        }
+    }
+
+    if (pre == NULL)
+    {
+        p.first = -1;
+    }
+    else
+    {
+        p.first = pre->data;
+    }
+
+    if (suc == NULL)
+    {
+        p.second = -1;
+    }
+    else
+    {
+        p.second = suc->data;
+    }
+
+    return p;
+}

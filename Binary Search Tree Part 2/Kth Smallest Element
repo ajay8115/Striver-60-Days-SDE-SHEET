@@ -1,0 +1,18 @@
+int val=0;
+int result=0;
+void solve(TreeNode<int> *root){
+    if(!root)return;
+    solve(root->left);
+    val--;
+    if(val==0){
+        result=root->data;
+        return;
+    }
+    solve(root->right);
+}
+int kthSmallest(TreeNode<int> *root, int k)
+{
+    val=k;
+    solve(root);
+    return result;
+}

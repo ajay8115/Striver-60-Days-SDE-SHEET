@@ -1,0 +1,48 @@
+template <typename T>
+class TreeNode
+{
+public:
+    T data;
+    TreeNode<T> *left;
+    TreeNode<T> *right;
+
+    TreeNode(T data)
+    {
+        this->data = data;
+        left = NULL;
+        right = NULL;
+    }
+};
+
+class BSTiterator
+{
+public:
+
+    stack<TreeNode<int> *> order;
+    BSTiterator(TreeNode<int> *root)
+    {
+        pushall(root);
+    }
+
+    void pushall(TreeNode<int> *root)
+    {
+        while (root != NULL)
+        {
+            order.push(root);
+            root = root->left;
+        }
+    }
+
+    int next()
+    {
+        TreeNode<int> *temp = order.top();
+        order.pop();
+        pushall(temp->right);
+        return temp->data;
+    }
+
+    bool hasNext()
+    {
+        return !order.empty();
+    }
+};

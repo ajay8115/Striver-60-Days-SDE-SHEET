@@ -1,0 +1,24 @@
+void inorder(TreeNode<int> *root, vector<int> &in)
+{
+    if (root)
+    {
+        inorder(root->left, in);
+        in.push_back(root->data);
+        inorder(root->right, in);
+    }
+}
+int KthLargestNumber(TreeNode<int> *root, int k)
+{
+    vector<int> in;
+
+    inorder(root, in);
+
+    if (k > in.size())
+    {
+        return -1;
+    }
+    
+    reverse(in.begin() , in.end());
+    
+    return in[k-1];
+}

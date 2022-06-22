@@ -1,0 +1,28 @@
+#include <bits/stdc++.h> 
+
+vector<int> KMostFrequent(int n, int k, vector<int> &a)
+{
+    map<int, int> m;
+
+    for (int i = 0; i < n; i++)
+    {
+        m[a[i]]++;
+    }
+
+    vector<int> ans;
+
+    priority_queue<pair<int, int>> pq;
+
+    for (auto p : m)
+    {
+        pq.push({p.second, p.first});
+        if (pq.size() > m.size() - k)
+        {
+            ans.push_back(pq.top().second);
+            pq.pop();
+        }
+    }
+
+    sort(ans.begin(), ans.end());
+    return ans;
+}

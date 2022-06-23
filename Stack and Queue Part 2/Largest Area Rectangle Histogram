@@ -1,0 +1,71 @@
+#include <bits/stdc++.h>
+vector<int> nxt_small(vector<int> a)
+{
+    int n = a.size();
+
+    vector<int> nsee(n, n - 1);
+
+    stack<pair<int, int>> st;
+
+    st.push({a[n - 1], n - 1});
+
+    for (int i = n - 2; i >= 0; i--)
+    {
+        while (!st.empty() and st.top().first >= a[i])
+        {
+            st.pop();
+        }
+        if (!st.empty())
+        {
+            nsee[i] = st.top().second - 1;
+        }
+        st.push({a[i], i});
+    }
+    return nsee;
+}
+
+vector<int> pre_small(vector<int> a)
+{
+    int n = a.size();
+
+    vector<int> pse(n, 0);
+
+    stack<pair<int, int>> st;
+
+    st.push({a[0], 0});
+
+    for (int i = 1; i < n; i++)
+    {
+        while (!st.empty() and st.top().first >= a[i])
+        {
+            st.pop();
+        }
+        if (!st.empty())
+        {
+            pse[i] = st.top().second + 1;
+        }
+        st.push({a[i], i});
+    }
+    return pse;
+}
+
+int largestRectangle(vector<int> &a)
+{
+    int n = a.size();
+
+    vector<int> nse = nxt_small(a);
+
+    vector<int> pse = pre_small(a);
+
+    int maxi = 0;
+    for (int i = 0; i < n; i++)
+    {
+        int k = (nse[i] - pse[i] + 1) * a[i];
+
+        maxi = max(maxi, k);
+    }
+
+    // cout << maxi << kk;
+
+    return maxi;
+}

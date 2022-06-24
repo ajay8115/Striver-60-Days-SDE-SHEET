@@ -1,0 +1,27 @@
+int longestIncreasingSubsequence(int a[], int n)
+{
+    int dp[n];
+    dp[0] = 1;
+
+    for (int i = 0; i < n; i++)
+    {
+        int maxi = 0;
+        for (int j = 0; j < i; j++)
+        {
+            if (a[j] < a[i])
+            {
+                maxi = max(maxi, dp[j]);
+            }
+        }
+
+        dp[i] = maxi + 1;
+    }
+
+    int ans = 1;
+    for (int i = 0; i < n; i++)
+    {
+        ans = max(ans, dp[i]);
+    }
+
+    return ans;
+}

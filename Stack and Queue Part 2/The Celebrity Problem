@@ -1,0 +1,96 @@
+// GFG SOLUTION 
+int celebrity(vector<vector<int>> &a, int n)
+{
+    stack<int> s;
+    for (int i = 0; i < n; i++)
+    {
+        s.push(i);
+    }
+
+    while (s.size() > 1)
+    {
+        int i = s.top();
+        s.pop();
+        int j = s.top();
+        s.pop();
+
+        if (a[i][j] == 1)
+        {
+            s.push(j);
+        }
+        else if (a[j][i] == 1)
+        {
+            s.push(i);
+        }
+    }
+
+    int cel = s.top();
+
+    for (int j = 0; j < n; j++)
+    {
+        if (a[cel][j] == 1)
+        {
+            return -1;
+        }
+    }
+
+    for (int i = 0; i < n; i++)
+    {
+        if (i != cel and a[i][cel] == 0)
+        {
+            return -1;
+        }
+    }
+
+    return cel;
+}
+
+// CODING NINJAS
+
+#include <bits/stdc++.h>
+
+int findCelebrity(int n)
+{
+    stack<int> s;
+    for (int i = 0; i < n; i++)
+    {
+        s.push(i);
+    }
+
+    while (s.size() > 1)
+    {
+        int i = s.top();
+        s.pop();
+        int j = s.top();
+        s.pop();
+
+        if (knows(i, j))
+        {
+            s.push(j);
+        }
+        else
+        {
+            s.push(i);
+        }
+    }
+
+    int cel = s.top();
+
+    for (int j = 0; j < n; j++)
+    {
+        if (knows(cel, j))
+        {
+            return -1;
+        }
+    }
+
+    for (int i = 0; i < n; i++)
+    {
+        if (i != cel and !knows(i, cel))
+        {
+            return -1;
+        }
+    }
+
+    return cel;
+}

@@ -1,0 +1,23 @@
+int calculateMinPatforms(int a[], int d[], int n)
+{
+    sort(a, a + n);
+    sort(d, d + n);
+
+    int cnt = 1;
+    int i = 1, j = 0;
+
+    while (i < n)
+    {
+        if (a[i] <= d[j])
+        {
+            cnt++;
+            i++;
+        }
+        else
+        {
+            i++, j++;
+        }
+    }
+
+    return cnt;
+}

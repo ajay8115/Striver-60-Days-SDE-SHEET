@@ -1,0 +1,31 @@
+static bool cmp(pair<int, int> &a, pair<int, int> &b)
+{
+    double k1 = (double)(a.second) / (double)(a.first);
+
+    double k2 = (double)(b.second) / (double)(b.first);
+
+    return k1 > k2;
+}
+
+double maximumValue(vector<pair<int, int>> &v, int n, int w)
+{
+    sort(v.begin(), v.end(), cmp);
+
+    double ans = 0;
+
+    for (int i = 0; i < n; i++)
+    {
+        if (v[i].first <= w)
+        {
+            ans += v[i].second;
+            w -= v[i].first;
+        }
+        else
+        {
+            ans += ((double)v[i].second / (double)v[i].first) * (double)w;
+            break;
+        }
+    }
+
+    return ans;
+}

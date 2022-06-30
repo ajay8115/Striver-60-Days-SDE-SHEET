@@ -1,0 +1,54 @@
+#include <bits/stdc++.h>
+#define ll long long int
+#define ld long double
+#define forn for (int i = 0; i < n; i++)
+#define srt(v) sort(v.begin(), v.end());
+#define rev(v) reverse(v.begin(), v.end());
+#define kk '\n'
+using namespace std;
+
+void dfs(int src, bool vis[], vector<vector<int>> &adj, vector<int> &t)
+{
+    vis[src] = true;
+ 
+    t.push_back(src);
+
+    for (auto V : adj[src])
+    {
+        if (vis[V] == false)
+        {
+            dfs(V, vis, adj, t);
+        }
+    }
+}
+vector<vector<int>> depthFirstSearch(int V, int n, vector<vector<int>> &edge)
+{
+    bool vis[V] = {false};
+
+    vector<vector<int>> ans;
+ 
+    vector<vector<int>> adj(V);
+
+    for (int i = 0; i < n; i++)
+    {
+        int v = edge[i][0];
+        int u = edge[i][1];
+        adj[v].push_back(u);
+        adj[u].push_back(v);
+    }
+
+    int src = 0;
+
+    for (int i = 0; i < V; i++)
+    {
+        if (vis[i] == false)
+        {
+            vector<int> t;
+            dfs(i, vis, adj, t);
+            srt(t);
+            ans.push_back(t);
+        }
+    }
+
+    return ans;
+}

@@ -1,0 +1,52 @@
+
+int detectCycleInDirectedGraph(int V, vector<pair<int, int>> &edges)
+{
+    vector<int> adj[V + 1];
+    for (int i = 0; i < edges.size(); i++)
+    {
+        int v = edges[i].first;
+        int u = edges[i].second;
+        adj[v].push_back(u); 
+    }
+
+    vector<int> indeg(V + 1, 0);
+
+    for (int i = 1; i <= V; i++)
+    {
+        for (auto it : adj[i])
+        {
+            indeg[it]++;
+        }
+    }
+
+    // vector<int>ans;
+    queue<int> q;
+
+    for (int i = 1; i <= V; i++)
+    {
+        if (indeg[i] == 0)
+        {
+            q.push(i);
+        }
+    }
+
+    int cnt = 0;
+
+    while (!q.empty())
+    {
+        int cur = q.front();
+        q.pop();
+        cnt++;
+        // ans.push_back(cur);
+        for (auto it : adj[cur])
+        {
+            indeg[it]--;
+            if (indeg[it] == 0)
+            {
+                q.push(it);
+            }
+        }
+    }
+
+    return (cnt != V);
+}

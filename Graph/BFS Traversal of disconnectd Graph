@@ -1,0 +1,49 @@
+#include <bits/stdc++.h>
+
+void bfs(int src, map<int, set<int>> &adj, vector<int> &ans, bool vis[])
+{
+    queue<int> q;
+    q.push(src);
+    vis[src] = true;
+
+    while (!q.empty())
+    {
+        int cur = q.front();
+        q.pop();
+        ans.push_back(cur);
+
+        for (auto V : adj[cur])
+        {
+            if (vis[V] == false)
+            {
+                vis[V] = true;
+                q.push(V);
+            }
+        }
+    }
+}
+
+vector<int> BFS(int v, vector<pair<int, int>> edges)
+{ 
+    
+    map<int, set<int>> adj;
+    for (auto p : edges)
+    {
+        adj[p.first].insert(p.second);
+        adj[p.second].insert(p.first);
+    }
+
+    bool vis[v] = {false};
+
+    vector<int> ans;
+
+    for (int i = 0; i < v; i++)
+    {
+        if (vis[i] == false)
+        {
+            bfs(i, adj, ans, vis);
+        }
+    }
+
+    return ans;
+}

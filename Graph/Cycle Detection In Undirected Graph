@@ -1,0 +1,105 @@
+#include <bits/stdc++.h>
+#define ll long long int
+#define ld long double
+#define forn for (int i = 0; i < n; i++)
+#define srt(v) sort(v.begin(), v.end());
+#define rev(v) reverse(v.begin(), v.end());
+#define kk '\n'
+using namespace std;
+
+bool check_cycle(vector<int> adj[], int src, bool vis[], int par)
+{
+    vis[src] = true;
+
+    for (auto V : adj[src])
+    {
+        if (vis[V] == false)
+        {
+            if (check_cycle(adj, V, vis, src) == true)
+            {
+                return true;
+            }
+        }
+        else if (V != par)
+        {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+string cycleDetection(vector<vector<int>> &edges, int V, int n)
+{
+    vector<int> adj[V+1];
+    for (int i = 0; i < n; i++)
+    {
+        int v = edges[i][0];
+        int u = edges[i][1];
+        adj[v].push_back(u);
+        adj[u].push_back(v);
+    }
+
+    bool vis[V+1] = {false};
+
+    for (int i = 1; i <= V; i++)
+    {
+        if (check_cycle(adj, i, vis, -1) == true)
+        {
+            return "Yes";
+        }
+    }
+
+    return "No";
+}
+
+bool isCyclic(vector<int> adj[], vector<int> &vis, int v, int parent)
+{
+    vis[v] = 1;
+
+    for (int child : adj[v])
+    {
+
+        if (!vis[child])
+        {
+
+            if (isCyclic(adj, vis, child, v))
+                return true;
+        }
+
+        else if (child != parent)
+        {
+
+            return true;
+        }
+    }
+
+    return false;
+}
+
+string cycleDetection(vector<vector<int>> &edges, int n, int m)
+{ 
+
+    vector<int> adj[n + 1];
+
+    for (int i = 0; i < m; i++)
+    {
+        adj[edges[i][0]].push_back(edges[i][1]);
+
+        adj[edges[i][1]].push_back(edges[i][0]);
+    }
+
+    vector<int> vis(n + 1, 0);
+
+    for (int i = 1; i <= n; i++)
+    {
+
+        if (!vis[i] && isCyclic(adj, vis, i, -1))
+        {
+
+            return "Yes";
+        }
+    }
+
+    return "No";
+}

@@ -1,0 +1,45 @@
+
+ 
+void dfs(int i, int j, int **a, int n, int m)
+{
+    if (i < 0 or j < 0 or i >= n or j >= m)
+    {
+        return;
+    }
+
+    if (a[i][j] == 0)
+    {
+        return;
+    }
+
+    if (a[i][j] == 1)
+    {
+        a[i][j] = 0;
+        dfs(i + 1, j, a, n, m);
+        dfs(i, j + 1, a, n, m);
+        dfs(i - 1, j, a, n, m);
+        dfs(i, j - 1, a, n, m);
+        dfs(i + 1, j + 1, a, n, m);
+        dfs(i - 1, j - 1, a, n, m);
+        dfs(i + 1, j - 1, a, n, m);
+        dfs(i - 1, j + 1, a, n, m);
+    }
+}
+int getTotalIslands(int **a, int n, int m)
+{
+
+    int cnt = 0;
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = 0; j < m; j++)
+        {
+            if (a[i][j] == 1)
+            {
+                cnt++;
+                dfs(i, j, a, n, m);
+            }
+        }
+    }
+
+    return cnt;
+} 

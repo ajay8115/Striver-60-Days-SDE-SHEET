@@ -1,0 +1,69 @@
+// GFG SOLUTION
+vector<int> dijkstra(int V, vector<vector<int>> adj[], int src)
+{
+    vector<int> dis(V, INT_MAX);
+    vector<bool> fin(V, false);
+    dis[src] = 0;
+    for (int i = 0; i < V - 1; i++)
+    {
+        int u = -1;
+        for (int v = 0; v < V; v++)
+        {
+            if (fin[v] == false and (u == -1 or dis[v] <= dis[u]))
+            {
+                u = v;
+            }
+        }
+
+        fin[u] = true;
+
+        for (auto it : adj[u])
+        {
+            int v = it[0];
+            int w = it[1];
+            if (fin[v] == false)
+            {
+                dis[v] = min(dis[v], dis[u] + w);
+            }
+        }
+    }
+
+    return dis;
+}
+
+// CODING NINJAS
+vector<int> dijkstra(vector<vector<int>> &vec, int v, int edges, int source)
+{
+
+    vector<pair<int, int>> adj[v];
+
+    for (int i = 0; i < edges; i++)
+    {
+        adj[vec[i][0]].push_back({vec[i][1], vec[i][2]});
+        adj[vec[i][1]].push_back({vec[i][0], vec[i][2]});
+    }
+
+    vector<int> arr(v, INT_MAX);
+
+    priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> pq;
+
+    arr[source] = 0;
+
+    pq.push({0, source});
+
+    while (pq.empty() == false)
+    {
+        int front = pq.top().second;
+        int dist = pq.top().first;
+        pq.pop();
+        for (auto neigh : adj[front])
+        {
+            if (dist + neigh.second < arr[neigh.first])
+            {
+                arr[neigh.first] = dist + neigh.second;
+                pq.push({arr[neigh.first], neigh.first});
+            }
+        }
+    }
+    return arr;
+}

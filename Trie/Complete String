@@ -1,0 +1,45 @@
+#include <bits/stdc++.h> 
+
+string completeString(int n, vector<string> &a)
+{
+    unordered_set<string> st;
+    for (int i = 0; i < n; i++)
+    {
+        st.insert(a[i]);
+    }
+
+    reverse(a.begin(), a.end());
+
+    int maxi = 0;
+    string ans = "-1";
+    for (int i = 0; i < n; i++)
+    {
+        string s = a[i];
+        int f = 0;
+        for (int j = 1; j < s.size(); j++)
+        {
+            string t = s.substr(0, j);
+            if (st.find(t) == st.end())
+            {
+                f = 1;
+            }
+        }
+
+        if (f == 0)
+        {
+            int size = s.size();
+            if (size > maxi)
+            {
+                maxi = max(maxi, size);
+                ans = s;
+            }
+        }
+    }
+
+    if (ans == "-1")
+    {
+        return "None";
+    }
+
+    return ans;
+}

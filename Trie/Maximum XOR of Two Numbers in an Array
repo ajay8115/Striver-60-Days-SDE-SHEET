@@ -1,0 +1,21 @@
+#include <bits/stdc++.h> 
+
+int maximumXor(vector<int> a)
+{
+    int n = a.size();
+
+    int maxi = 0;
+    for (int i = 0; i < n - 1; i++)
+    {
+        int xr = a[i];
+        int k = a[i];
+        for (int j = i + 1; j < n; j++)
+        {
+            xr ^= a[j];
+            maxi = max(maxi, xr);
+            xr = k;
+        }
+    }
+
+    return maxi;
+}

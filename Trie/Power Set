@@ -1,0 +1,24 @@
+#include <bits/stdc++.h> 
+
+vector<vector<int>> pwset(vector<int> a)
+{
+    int n = a.size();
+
+    vector<vector<int>> ans;
+    // pow(2,n) == (1<<n);
+    for (int num = 0; num < pow(2, n); num++)
+    {
+        vector<int> t;
+        for (int i = 0; i < n; i++)
+        {
+            if (num & (1 << i))
+            {
+                t.push_back(a[i]);
+            }
+        }
+
+        ans.push_back(t);
+    }
+
+    return ans;
+}

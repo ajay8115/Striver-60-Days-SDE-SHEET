@@ -1,0 +1,34 @@
+#include <bits/stdc++.h> 
+
+vector<int> maxXorQueries(vector<int> &a, vector<vector<int>> &q)
+{
+
+    sort(a.begin(), a.end());
+
+    int n = a.size();
+    vector<int> ans;
+
+    for (int i = 0; i < q.size(); i++)
+    {
+        int xr = q[i][0], limit = q[i][1];
+        int maxi = -1;
+
+        int f = 0;
+        for (int j = 0; j < n; j++)
+        {
+            if (a[j] > limit)
+            {
+                break;
+            }
+            else
+            {
+                int res = (xr ^ a[j]);
+                maxi = max(maxi, res);
+            }
+        }
+
+        ans.push_back(maxi);
+    }
+
+    return ans;
+}

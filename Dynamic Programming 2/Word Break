@@ -1,0 +1,44 @@
+#include <bits/stdc++.h>
+
+bool wordBreak(vector<string> &a, int m, string &s)
+{
+    unordered_set<string> st;
+    for (int i = 0; i < m; i++)
+    {
+        st.insert(a[i]);
+    }
+
+    int n = s.size();
+    bool dp[n + 1][n + 1];
+
+    for (int length = 1; length <= n; length++)
+    {
+        int start = 1, end = length;
+        while (end <= n)
+        {
+            string temp = s.substr(start - 1, length);
+            if (st.find(temp) != st.end())
+            {
+                dp[start][end] = true;
+            }
+            else
+            {
+                bool flag = false;
+                for (int i = start; i < end; i++)
+                {
+                    if (dp[start][i] == true and dp[i + 1][end] == true)
+                    {
+                        flag = true;
+                        break;
+                    }
+                }
+                dp[start][end] = flag;
+            }
+
+            start++;
+            end++;
+        }
+    }
+
+    return dp[1][n];
+}

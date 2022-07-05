@@ -1,0 +1,34 @@
+ #include <bits/stdc++.h> 
+ 
+void rec(string s, int l, int n, vector<string> &v)
+{
+    if (l == n - 1)
+    {
+        v.push_back(s);
+    
+    }
+
+    else
+    {
+        for (int i = l; i < n; i++)
+        {
+            swap(s[i], s[l]);
+            rec(s, l + 1, n, v);
+            swap(s[i], s[l]);
+        }
+    }
+}
+string kthPermutation(int n, int k)
+{
+    string s = "";
+    for (int i = 1; i <= n; i++)
+    {
+        s += to_string(i);
+    }
+
+    vector<string> v;
+   
+    rec(s, 0, n, v);
+     sort(v.begin(), v.end());
+    return v[k - 1];
+}

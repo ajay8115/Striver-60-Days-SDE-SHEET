@@ -1,0 +1,10 @@
+int uniqueElement(vector<int> a, int n)
+{
+    int xr = 0;
+    for (int i = 0; i < n; i++)
+    { 
+        xr^=a[i];
+    }
+    
+    return xr;
+}
